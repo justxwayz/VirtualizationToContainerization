@@ -176,15 +176,120 @@ app  | Server running at http://localhost:3000
 
 ### Créer un compose.yml
 
+* compose.yml content added
 
+```info
+services:
+  db:
+    image: mysql:8.4
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=app_db
+    volumes:
+      - db_data:/var/lib/mysql
+
+  pma:
+    image: phpmyadmin
+    container_name: pma
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+
+  app:
+    image: shitty_app_with_db:1.0
+    container_name: app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=app_db
+      - DB_PORT=3306
+      - PORT=3000
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+```
 
 ### Allumer la stack et prouver que ça fonctionne
 
+```bash
+  docker ps
+```
 
+* images list success
+
+```info
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+13e2a9ea0f5c   mysql:8.4                "docker-entrypoint.s…"   46 seconds ago   Up 45 seconds   3306/tcp, 33060/tcp                           db
+cb3acd9f788c   shitty_app_with_db:1.0   "docker-entrypoint.s…"   2 minutes ago    Up 45 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   app
+c4c6b6f92935   phpmyadmin               "/docker-entrypoint.…"   4 minutes ago    Up 45 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp       pma
+```
+
+```bash
+  docker logs app
+```
+
+* logs success
+
+```info
+> Shitty webapp for B3 Dev TP1@1.0.0 dev
+> nodemon -L src/app.js
+
+[nodemon] 3.1.11
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node src/app.js`
+
+Database ready
+Server running on port 3000
+```
+
+```bash
+  curl http://localhost:8080
+```
+
+* phpmyadmin curl response
+
+```info
+StatusCode        : 200
+RawContent        : HTTP/1.1 200 OK
+```
+
+```bash
+  curl http://localhost:3000
+```
+
+* shitty_app_with_db curl response
+
+```info
+StatusCode        : 200
+RawContent        : HTTP/1.1 200 OK
+```
 
 ### Mettre en place des données persistentes pour la db
 
+* data consistant success
 
+```info
+  db:
+    image: mysql:8.4
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=app_db
+    volumes:
+      - db_data:/var/lib/mysql
+```
 
 ---
 
