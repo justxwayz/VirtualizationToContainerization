@@ -1,0 +1,31 @@
+stream_over_http_enabled: true
+
+server:
+  http_listen_port: 3200
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        http:
+          endpoint: "0.0.0.0:4318"
+        grpc:
+          endpoint: "0.0.0.0:4317"
+
+storage:
+  trace:
+    backend: local
+    local:
+      path: /tmp/tempo
+
+metrics_generator:
+  storage:
+    path: /tmp/tempo/generator/wal
+  processor:
+    span_metrics:
+      dimensions:
+        - "http.method"
+        - "http.route"
+        - "http.status_code"
+        - "http.bytes_out"
+        - "http.bytes_in"

@@ -1,0 +1,33 @@
+{
+  "name": "Shitty webapp for B3 Dev TP1",
+  "version": "1.0.0",
+  "description": "Meow",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon -L src/app.js"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.50.0",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.208.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.208.0",
+    "@opentelemetry/instrumentation-express": "^0.39.0",
+    "@opentelemetry/instrumentation-http": "^0.52.0",
+    "@opentelemetry/resources": "^1.28.0",
+    "@opentelemetry/sdk-metrics": "^1.28.0",
+    "@opentelemetry/sdk-node": "^0.208.0",
+    "@opentelemetry/sdk-trace-base": "^1.28.0",
+    "@opentelemetry/semantic-conventions": "^1.28.0",
+    "@pyroscope/nodejs": "^0.4.8",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [],
+  "author": "it4",
+  "license": "WTFPL",
+  "type": "commonjs"
+}
