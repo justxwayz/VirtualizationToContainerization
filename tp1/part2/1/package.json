@@ -1,0 +1,20 @@
+{
+  "name": "Shitty webapp for B3 Dev TP1",
+  "version": "1.0.0",
+  "description": "Meow",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon --legacy-watch src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [],
+  "author": "it4",
+  "license": "WTFPL",
+  "type": "commonjs"
+}
