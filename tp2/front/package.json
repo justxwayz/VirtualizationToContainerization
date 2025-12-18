@@ -1,0 +1,18 @@
+{
+  "name": "mylibrary",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "npx nodemon -L src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [],
+  "author": "it4",
+  "license": "WTFPL",
+  "type": "commonjs"
+}

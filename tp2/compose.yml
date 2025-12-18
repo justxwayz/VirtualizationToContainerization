@@ -1,0 +1,35 @@
+services:
+  back:
+    build: ./back
+    container_name: mylibrary_back
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./back/src:/app/src
+    env_file:
+      - ./back/.env
+    depends_on:
+      - db
+
+  front:
+    build: ./front
+    container_name: mylibrary_front
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./front/src:/app/src
+    env_file:
+      - ./front/.env
+    depends_on:
+      - back
+
+  db:
+    image: mysql:8.4
+    container_name: mylibrary_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mylibrary_db
+      MYSQL_USER: mylibrary
+      MYSQL_PASSWORD: mylib
+    volumes:
+      - ./db/data:/var/lib/mysql
