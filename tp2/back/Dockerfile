@@ -1,12 +1,22 @@
 FROM node:20-alpine
 
+# Labels
+LABEL org.opencontainers.image.authors="justxwayz"
+LABEL org.opencontainers.image.source="https://github.com/justxwayz/VirtualizationToContainerization"
+LABEL org.opencontainers.image.vendor="justxwayz / MyLibrary"
+
 WORKDIR /app
 
 COPY package.json .
 
-RUN npm install
+RUN npm install && npm cache clean --force
 
 COPY ./src ./src
+
+# app User
+RUN adduser -D mylibrary
+RUN chown -R mylibrary:mylibrary /app
+USER mylibrary
 
 ENV PORT=3000
 EXPOSE 3000

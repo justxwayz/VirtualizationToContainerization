@@ -342,12 +342,74 @@ benchmark: 1.567s
 
 ### Modifiez le Dockerfile
 
+* Dockerfile (alpine)
+
+```info
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install && npm cache clean --force
+
+COPY ./src ./src
+
+ENV PORT=3000
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+```
+
+* Dockerfile-debian
+
+```info
+FROM node:20-bullseye
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install && npm cache clean --force
+
+COPY ./src ./src
+
+ENV PORT=3000
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+```
+
 ## 2. Labels
 
 ### Ajoutez des directives LABEL à votre Dockerfile qui précisent, avec les LABELs standards :
 
+* label into Dockerfiles
+
+```info
+LABEL org.opencontainers.image.authors="justxwayz"
+LABEL org.opencontainers.image.source="https://github.com/justxwayz/VirtualizationToContainerization"
+LABEL org.opencontainers.image.vendor="justxwayz / MyLibrary"
+```
+
 ## 3. No root
 
 ### Ajoutez un utilisateur applicatif à votre Dockerfile
+
+* Dockerfile USER (alpine)
+
+```info
+RUN adduser -D mylibrary
+RUN chown -R mylibrary:mylibrary /app
+USER mylibrary
+```
+
+* Dockerfile-debian USER
+
+```info
+RUN useradd -m mylibrary
+RUN chown -R mylibrary:mylibrary /app
+USER mylibrary
+```
 
 ---
