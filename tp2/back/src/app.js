@@ -15,6 +15,9 @@ const DB_USER = process.env.DB_USER || 'root';
 const DB_PASSWORD = process.env.DB_PASSWORD || '';
 const DB_NAME = process.env.DB_NAME || 'mylibrary_db';
 
+// compteur global
+let requestCount = 0;
+
 const pool = mysql.createPool({
     host: DB_HOST,
     port: DB_PORT,
@@ -34,7 +37,23 @@ let library = [
 
 // Middleware de logs
 app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    const start = Date.now();
+    const timestamp = new Date().toISOString();
+
+    console.log(`[${timestamp}] ➡️  ${req.method} ${req.url} reçue`);
+
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+        requestCount++;
+
+        console.log(
+            `[${new Date().toISOString()}] ⬅️  ${req.method} ${req.url} traitée | ` +
+            `status=${res.statusCode} | ` +
+            `time=${duration}ms | ` +
+            `total_requests=${requestCount}`
+        );
+    });
+
     next();
 });
 

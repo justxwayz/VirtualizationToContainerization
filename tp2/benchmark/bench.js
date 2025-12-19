@@ -31,6 +31,8 @@ async function runBenchmark() {
     console.log(`Concurrency: ${CONCURRENCY}`);
     console.log('--------------------------------');
 
+    console.time("benchmark");
+
     const start = Date.now();
 
     let queue = [];
@@ -53,6 +55,10 @@ async function runBenchmark() {
     console.log(`Errors: ${errors}`);
     console.log(`Total time: ${duration}s`);
     console.log(`Req/sec: ${(TOTAL_REQUESTS / duration).toFixed(2)}`);
+
+    console.timeEnd("benchmark");
 }
 
-runBenchmark();
+runBenchmark().catch(err => {
+    console.error("Benchmark failed:", err);
+});
