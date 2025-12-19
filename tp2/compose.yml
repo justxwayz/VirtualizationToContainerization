@@ -1,6 +1,8 @@
 services:
   back:
-    build: ./back
+    build:
+      context: ./back
+      dockerfile: Dockerfile-alpine
     container_name: mylibrary_back
     ports:
       - "3000:3000"
