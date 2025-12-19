@@ -49,7 +49,6 @@ async function runBenchmark() {
 
     const duration = (Date.now() - start) / 1000;
 
-    console.log('--------------------------------');
     console.log(`Success: ${success}`);
     console.log(`Errors: ${errors}`);
     console.log(`Total time: ${duration}s`);
